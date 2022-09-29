@@ -1,0 +1,3 @@
+__pycache__
+*.xcf # gimp files
+*.swp # i used vim for some editing
