@@ -186,7 +186,6 @@ class Settings:
         # draw to surface
 
         self.surface.blit(pygame.transform.rotate(settings_text_background, cos(self.title_vector.x/15)*2), (self.title_vector.x-5, self.title_vector.y+5))
-        
         self.surface.blit(pygame.transform.rotate(settings_text, cos(self.title_vector.x/15)*2), (self.title_vector.x, self.title_vector.y))
         
     def update(self):
