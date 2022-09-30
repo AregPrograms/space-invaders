@@ -24,6 +24,8 @@ def blitRotate(surf, image, pos, originPos, angle): # took from https://stackove
 
 
 class MainMenu:
+    
+    
     def __init__(self, display: pygame.Surface):
         self.display_surf = display
         self.surface = pygame.Surface(display.get_size())
@@ -54,8 +56,8 @@ class MainMenu:
 
         # display word "SPACE"
 
-        space_text = title_font.render("SPACE", True, (255, 255, 255))
-        space_text_background = title_font.render("SPACE", True, (50, 50, 50))
+        space_text = title_font.render("SPACE", False, (255, 255, 255))
+        space_text_background = title_font.render("SPACE", False, (50, 50, 50))
 
         # draw to surface
 
@@ -65,8 +67,8 @@ class MainMenu:
         
         # display word "INVADERS"
 
-        invaders_text = title_font.render("INVADERS", True, (255, 255, 255))
-        invaders_text_background = title_font.render("INVADERS", True, (50, 50, 50))
+        invaders_text = title_font.render("INVADERS", False, (255, 255, 255))
+        invaders_text_background = title_font.render("INVADERS", False, (50, 50, 50))
 
         # draw to surface
 
@@ -122,10 +124,10 @@ class MainMenu:
         for i in range(len(self.options)):
             text = None
             if i == self.selected:
-                text = btn_font.render(f"> {self.options[i]}", True, (0, 150, 150))
+                text = btn_font.render(f"> {self.options[i]}", False, (0, 150, 150))
                 pygame.draw.rect(self.surface, (20,20,20), (225-13, 200+(i*(text.get_height()+10))-5, text.get_width()+26, text.get_height()+10), border_radius=15)
             else:
-                text = btn_font.render(f"  {self.options[i]}", True, (255, 255, 255))
+                text = btn_font.render(f"  {self.options[i]}", False, (255, 255, 255))
                 
             self.surface.blit(text, (225, 200+(i*(text.get_height()+10))))
 
@@ -139,7 +141,6 @@ class MainMenu:
         
     def input(self, event: pygame.event.Event):
         if event.type == pygame.KEYDOWN:
-            print(event)
             if event.key == 1073741906 or event.key == 119:
                 self.selected -= 1
                 self.selected = self.max_selection if self.selected <= -1 else self.selected
@@ -156,6 +157,44 @@ class MainMenu:
                     assets.audio["start"].play()
                 
                 return self.options[self.selected]
+        
+    def draw(self):
+        self.display_surf.blit(self.surface, (0, 0))
+        
+class Settings:
+    def __init__(self, display: pygame.Surface):
+        self.display_surf = display
+        self.surface = pygame.Surface(display.get_size())
+        self.surface.set_colorkey((0, 0, 0))
+        
+        self.title_vector = pygame.Vector2((30, 30))
+        
+    def __draw_title(self):
+        title_font = pygame.font.Font("resources/atari.ttf", 56) # load the title font
+        
+        # move title
+        
+        #self.title_vector.y += cos(time.perf_counter())/5
+        self.title_vector.x += cos(time.perf_counter()+0.5)/5
+        
+
+        # display word "SETTINGS"
+
+        settings_text = title_font.render("SETTINGS", False, (255, 255, 255))
+        settings_text_background = title_font.render("SETTINGS", False, (50, 50, 50))
+
+        # draw to surface
+
+        self.surface.blit(pygame.transform.rotate(settings_text_background, cos(self.title_vector.x/15)*2), (self.title_vector.x-5, self.title_vector.y+5))
+        
+        self.surface.blit(pygame.transform.rotate(settings_text, cos(self.title_vector.x/15)*2), (self.title_vector.x, self.title_vector.y))
+        
+    def update(self):
+        self.surface.fill((0, 0, 0))
+        self.__draw_title()
+        
+    def input(self, a):
+        pass
         
     def draw(self):
         self.display_surf.blit(self.surface, (0, 0))

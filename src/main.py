@@ -2,7 +2,8 @@ import pygame
 from ship import Ship
 from enemy import Enemy
 import assets
-from menus import MainMenu
+from menus import MainMenu, Settings
+from utils import Notification
 
 def main(): 
     # Initialize Constants
@@ -27,6 +28,10 @@ def main():
     
     assets.audio["main_menu"].play(-1)
     
+    notification = Notification("Hi!", ["This is for testing purposes", "Suprising how you", "even found this!"])
+    
+    #notification.show()
+    
     while running:
         clock.tick(60)
         for event in pygame.event.get():
@@ -36,20 +41,16 @@ def main():
                 
         screen.blit(pygame.image.load("resources/images/bg.png"), (0, 0))
         
-        if not selection == "Play":
-            menu.update()
-            menu.draw()
-        elif not selection == "Settings":
-            menu.update()
-            menu.draw()
-        elif not selection == "Help":
-            menu.update()
-            menu.draw()
-        elif not selection == "About":
-            menu.update()
-            menu.draw()
-        else:
+        if selection == "Play":
             assets.audio["main_menu"].stop()
+        elif selection == "Settings":
+            menu = Settings(screen)
+         
+        menu.update()   
+        menu.draw()
+        
+        notification.update()
+        notification.draw(screen)
             
             
         
