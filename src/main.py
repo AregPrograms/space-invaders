@@ -20,7 +20,10 @@ def main():
     
     clock = pygame.time.Clock()
     
-    menu = MainMenu(screen)
+    MAIN_MENU = MainMenu(screen)
+    SETTINGS = Settings(screen)
+    
+    menu = MAIN_MENU
     
     selection = None
     
@@ -28,9 +31,9 @@ def main():
     
     assets.audio["main_menu"].play(-1)
     
-    notification = Notification("Hi!", ["This is for testing purposes", "Suprising how you", "even found this!"])
+    notification = Notification("Hi!", ["hello"], 60)
     
-    #notification.show()
+    notification.show()
     
     while running:
         clock.tick(60)
@@ -39,20 +42,20 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
                 
-        screen.blit(pygame.image.load("resources/images/bg.png"), (0, 0))
+        screen.blit(pygame.image.load("resources/gfx/bg.png"), (0, 0))
         
         if selection == "Play":
             assets.audio["main_menu"].stop()
         elif selection == "Settings":
-            menu = Settings(screen)
+            menu = SETTINGS
+        elif selection == "Back":
+            menu = MAIN_MENU
          
         menu.update()   
         menu.draw()
         
         notification.update()
         notification.draw(screen)
-            
-            
         
         pygame.display.update()
                 

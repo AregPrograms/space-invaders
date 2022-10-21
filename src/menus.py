@@ -3,6 +3,9 @@ import time
 import pygame
 import assets
 
+def clamp(n, smallest, largest): 
+    return max(smallest, min(n, largest))
+
 def blitRotate(surf, image, pos, originPos, angle): # took from https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame, dont judge, just a programmer, its natural at this point
 
     # offset from pivot to center
@@ -46,7 +49,7 @@ class MainMenu:
         self.title_vector = pygame.Vector2(30, 50)
         
     def __draw_title(self):
-        title_font = pygame.font.Font("resources/atari.ttf", 56) # load the title font
+        title_font = pygame.font.Font("resources/press_start.ttf", 56) # load the title font
         
         # move title
         
@@ -87,7 +90,7 @@ class MainMenu:
         
         # draw title text
         
-        title_font = pygame.font.Font("resources/atari.ttf", 24)
+        title_font = pygame.font.Font("resources/press_start.ttf", 24)
         log_text = title_font.render("-LOG-", True, (255, 255, 255))
         log_text_bg = title_font.render("-LOG-", True, (50, 50, 50))
         
@@ -105,7 +108,7 @@ class MainMenu:
             "invaders!"
         ]
         
-        text_font = pygame.font.Font("resources/atari.ttf", 10)
+        text_font = pygame.font.Font("resources/press_start.ttf", 10)
         
         text_y = 250
         
@@ -119,7 +122,7 @@ class MainMenu:
             self.surface.blit(rendered_line, (25+((165/2)-rendered_line.get_width()/2),text_y))
             
     def __draw_buttons(self):
-        btn_font = pygame.font.Font("resources/atari.ttf", 25)
+        btn_font = pygame.font.Font("resources/press_start.ttf", 25)
         
         for i in range(len(self.options)):
             text = None
@@ -153,8 +156,16 @@ class MainMenu:
                 assets.audio["select"].play()
                 
             if event.key == 13:
-                if self.options[self.selected] == "Play":
+                selected = self.options[self.selected]
+                
+                if selected == "Play":
                     assets.audio["start"].play()
+                    
+                if selected == "Help":
+                    assets.audio["unavailable"].play()
+                    
+                if selected == "About":
+                    assets.audio["unavailable"].play()
                 
                 return self.options[self.selected]
         
@@ -167,10 +178,18 @@ class Settings:
         self.surface = pygame.Surface(display.get_size())
         self.surface.set_colorkey((0, 0, 0))
         
+        self.options = [
+            ["Decrease Volume", "Increase Volume"],
+            ["Back", "Other?"]
+        ]
+
+        self.__option_x = 0
+        self.__option_y = 0
+        
         self.title_vector = pygame.Vector2((30, 30))
         
     def __draw_title(self):
-        title_font = pygame.font.Font("resources/atari.ttf", 56) # load the title font
+        title_font = pygame.font.Font("resources/press_start.ttf", 56) # load the title font
         
         # move title
         
@@ -180,6 +199,7 @@ class Settings:
 
         # display word "SETTINGS"
 
+
         settings_text = title_font.render("SETTINGS", False, (255, 255, 255))
         settings_text_background = title_font.render("SETTINGS", False, (50, 50, 50))
 
@@ -188,12 +208,91 @@ class Settings:
         self.surface.blit(pygame.transform.rotate(settings_text_background, cos(self.title_vector.x/15)*2), (self.title_vector.x-5, self.title_vector.y+5))
         self.surface.blit(pygame.transform.rotate(settings_text, cos(self.title_vector.x/15)*2), (self.title_vector.x, self.title_vector.y))
         
+    def __draw_options(self):
+        self.text_font = pygame.font.Font("resources/press_start.ttf", 24)
+        
+        volume_up = pygame.transform.flip(pygame.transform.scale(assets.images["volume_up"].copy(), (64, 64)), True, True)
+        volume_down = pygame.transform.scale(assets.images["volume_down"].copy(), (64, 64))
+        
+        self.surface.blit(volume_up, (386, 200))
+        self.surface.blit(volume_down, (50, 200))
+        
+        back_btn_text = self.text_font.render("Back", True, (255, 255, 255))
+        other_btn_text = self.text_font.render("Other?", True, (255, 255, 255))
+        
+        self.surface.blit(back_btn_text, (50, 350))
+        self.surface.blit(other_btn_text, (300, 350))
+        
+        pygame.draw.rect(self.surface, (255, 255, 255), (60, 270, 70, 10), 5) if self.options[self.__option_y][self.__option_x] == "Decrease Volume" else None
+        pygame.draw.rect(self.surface, (255, 255, 255), (374, 270, 86, 10), 5)if self.options[self.__option_y][self.__option_x] == "Increase Volume" else None 
+        pygame.draw.rect(self.surface, (255, 255, 255), (50, 382, back_btn_text.get_width(), 10), 5)if self.options[self.__option_y][self.__option_x] == "Back" else None 
+        pygame.draw.rect(self.surface, (255, 255, 255), (300, 382, other_btn_text.get_width(), 10), 5) if self.options[self.__option_y][self.__option_x] == "Other?" else None
+        
     def update(self):
         self.surface.fill((0, 0, 0))
         self.__draw_title()
+        self.__draw_options()
         
-    def input(self, a):
-        pass
-        
+    def input(self, event: pygame.event.Event):
+        if event.type == pygame.KEYDOWN:
+            # w: 119, 1073741906
+            # a: 97, 1073741904
+            # s: 115, 1073741905
+            # d: 100, 1073741903
+
+            if event.key == 119 or event.key == 1073741906: # up
+                if self.__option_y > 0:
+                    self.__option_y -= 1
+                    
+                    assets.audio["select"].play()
+
+                if not self.__option_x < len(self.options[self.__option_y]):
+                    self.__option_x = len(self.options[self.__option_y])-1
+
+            if event.key == 115 or event.key == 1073741905: # down
+                if self.__option_y < len(self.options)-1:
+                    self.__option_y += 1
+                    
+                    assets.audio["select"].play()
+
+                if not self.__option_x < len(self.options[self.__option_y]):
+                    self.__option_x = len(self.options[self.__option_y])-1
+                    
+            if event.key == 97 or event.key == 1073741904: # left
+                if self.__option_x > 0:
+                    self.__option_x -= 1
+                    
+                    assets.audio["select"].play()
+            
+            if event.key == 100 or event.key == 1073741903: # right
+                if self.__option_x < len(self.options[self.__option_y])-1:
+                    self.__option_x += 1
+                    
+                    assets.audio["select"].play()
+                    
+            if event.key == 13: # enter
+                option = self.options[self.__option_y][self.__option_x]
+                
+                if option == "Decrease Volume":
+                    assets.volume = clamp(assets.volume-1, 0, 10)
+                    
+                    for key in assets.audio.keys():
+                        assets.audio[key].set_volume(assets.volume/10)
+                        
+                if option == "Increase Volume":
+                    
+                    assets.volume = clamp(assets.volume+1, 0, 10)
+                    
+                    for key in assets.audio.keys(): 
+                        assets.audio[key].set_volume(assets.volume/10)
+                        
+                if option == "Other?":
+                    assets.audio["unavailable"].play()
+                        
+                if option == "Back":
+                    return "Back"
+                
+          
+
     def draw(self):
         self.display_surf.blit(self.surface, (0, 0))

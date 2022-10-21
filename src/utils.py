@@ -5,8 +5,8 @@ class Notification:
     def __init__(self, title: str, text: Iterable[str], visible_frames: int = 480):
         # initialize fonts
         
-        title_font = pygame.font.Font("resources/atari.ttf", 24)
-        text_font = pygame.font.Font("resources/atari.ttf", 16)
+        title_font = pygame.font.Font("resources/press_start.ttf", 24)
+        text_font = pygame.font.Font("resources/press_start.ttf", 16)
         
         # create text
         
@@ -85,7 +85,6 @@ class Notification:
             self.__frames += 1
     
             if self.__frames >= self.visible_frames:
-                print("hiding")
                 self.hide()
                 
                 
