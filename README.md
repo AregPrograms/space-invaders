@@ -2,7 +2,6 @@
 As a fun project, I decided to make Space Invaders, but reimagined as a modern-ish game.
 
 ## To-do list
-<hr>
 
 - Upgrades: Small buttons to upgrade your stats. (health, power)
 - Powerups: Random collectables that spawn on the map that temorarily give effects (heal, strength)
@@ -11,14 +10,11 @@ As a fun project, I decided to make Space Invaders, but reimagined as a modern-i
 - Multiplayer: You will be able to connect with people on your network, or worldwide if you set up your own server (GCP tutorial soon).
 
 ## <sup>Extra</sup> Features
-<hr>
 
 - Discord Rich Presence ( ty for idea, [jased-0001](https://github.com/Jased-0001) ) <sup>now your friends know that you are playing funny atari game
 
 
-### Screenshots
-<hr>
-
+## Screenshots
 
 Title Screen
 <br>
