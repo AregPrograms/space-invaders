@@ -1,4 +1,5 @@
 from random import randint
+from time import time
 import pygame
 from enemy import Enemy
 from entity import Entity
@@ -137,6 +138,8 @@ class Game:
                 
                 config.ENEMY_SPAWN_RATE -= 4
                 config.ENEMY_SPAWN_RATE = methods.clamp(config.ENEMY_SPAWN_RATE, 30, 160)
+                
+                config.RPC.update(state="Fighting Enemies", large_image="logo", large_text="Space Invaders", details=f"Level {self.level}", start=config.START_UNIX_TIME, buttons=[{"label": "Join the fun", "url": "https://github.com/AregPrograms/space-invaders/releases/0.0.1"}])
                 
                 print(self.max_enemies)
         
