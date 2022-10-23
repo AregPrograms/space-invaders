@@ -9,6 +9,11 @@ There should be many issues, and you can also make issues of your own that I wil
 
 <sup>P.S. You can start working on multiplayer once the base singleplayer mode is finished!<sup>
 
+### Features
+
+- Discord Rich Presence ( ty for idea, [jased-0001](https://github.com/Jased-0001) ) <sup>now your friends know that you are playing funny atari game
+
+
 ### Screenshots
 <hr>
 
