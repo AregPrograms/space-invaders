@@ -87,7 +87,7 @@ def main():
             config.RPC.update(state="Configuring Settings", large_image="logo", large_text="Space Invaders", start=config.START_UNIX_TIME)
         elif selection == "Back":
             menu = MAIN_MENU
-            config.RPC.update(state="Vibing in the Menu", large_image="log", large_text="Space Invaders", start=config.START_UNIX_TIME)
+            config.RPC.update(state="Vibing in the Menu", large_image="logo", large_text="Space Invaders", start=config.START_UNIX_TIME)
          
         menu.update()
         menu.draw()
