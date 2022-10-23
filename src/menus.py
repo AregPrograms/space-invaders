@@ -2,9 +2,7 @@ from math import cos
 import time
 import pygame
 import assets
-
-def clamp(n, smallest, largest): 
-    return max(smallest, min(n, largest))
+from utils import methods
 
 def blitRotate(surf, image, pos, originPos, angle): # took from https://stackoverflow.com/questions/4183208/how-do-i-rotate-an-image-around-its-center-using-pygame, dont judge, just a programmer, its natural at this point
 
@@ -160,6 +158,7 @@ class MainMenu:
                 
                 if selected == "Play":
                     assets.audio["start"].play()
+                    assets.audio["game_theme"].play(-1)
                     
                 if selected == "Help":
                     assets.audio["unavailable"].play()
@@ -274,17 +273,16 @@ class Settings:
                 option = self.options[self.__option_y][self.__option_x]
                 
                 if option == "Decrease Volume":
-                    assets.volume = clamp(assets.volume-1, 0, 10)
-                    
-                    for key in assets.audio.keys():
-                        assets.audio[key].set_volume(assets.volume/10)
+                        
+                    methods.change_volume(
+                        methods.clamp(assets.volume-1, 0, 10)
+                    )
                         
                 if option == "Increase Volume":
                     
-                    assets.volume = clamp(assets.volume+1, 0, 10)
-                    
-                    for key in assets.audio.keys(): 
-                        assets.audio[key].set_volume(assets.volume/10)
+                    methods.change_volume(
+                        methods.clamp(assets.volume+1, 0, 10)
+                    )
                         
                 if option == "Other?":
                     assets.audio["unavailable"].play()

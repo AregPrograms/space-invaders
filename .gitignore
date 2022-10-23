@@ -2,3 +2,4 @@ __pycache__
 *.xcf # gimp files
 *.swp # sometimes used vim
 *.zip
+run.bat # i was tired of running the whole command each time

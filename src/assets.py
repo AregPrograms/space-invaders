@@ -1,4 +1,5 @@
 import pygame
+from utils import SpriteSheet
 
 pygame.mixer.init()
 pygame.font.init()
@@ -8,7 +9,10 @@ volume = 10 # maximum 10
 # pre-load all the assets
 
 audio: dict = {
+    # Music
+    
     "main_menu": pygame.mixer.Sound("resources/music/main_menu_josefpres.wav"),
+    "game_theme": pygame.mixer.Sound("resources/music/game_theme_volvion.mp3"),
     
     # SFX
     
@@ -24,7 +28,8 @@ audio: dict = {
 images: dict = {
     "ship": pygame.image.load("resources/gfx/ship.png"),
     "volume_up": pygame.image.load("resources/gfx/volume-up.png"),
-    "volume_down": pygame.image.load("resources/gfx/volume-down.png")
+    "volume_down": pygame.image.load("resources/gfx/volume-down.png"),
 }
 
 audio["unavailable"].set_volume(2)
+audio["damage"].set_volume(2)
