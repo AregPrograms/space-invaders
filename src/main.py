@@ -35,10 +35,6 @@ def main():
     
     assets.audio["main_menu"].play(-1)
     
-    notification = Notification("Hi!", ["hello"], 60)
-    
-    notification.show()
-    
     enemy_atlas = SpriteSheet("resources/gfx/enemy-atlas.png")
     enemy_atlas = enemy_atlas.extractFromDicts({
         "frame-1":
@@ -88,9 +84,6 @@ def main():
          
         menu.update()   
         menu.draw()
-        
-        notification.update()
-        notification.draw(screen)
         
         pygame.display.update()
                 
