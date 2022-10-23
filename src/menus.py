@@ -98,12 +98,10 @@ class MainMenu:
         # draw log info
         
         text = [
-            "0.0.0",
-            "this is an",
-            "unreleased",
-            "version for",
-            "custom space",
-            "invaders!"
+            "0.0.2",
+            "- Added Rich",
+            "presence for",
+            "Discord"
         ]
         
         text_font = pygame.font.Font("resources/press_start.ttf", 10)
