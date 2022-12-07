@@ -8,7 +8,7 @@ try:
     RPC = Presence(client_id)
     RPC.connect()
 except e:
-    PYPRESCENCE_OK = False
+    PYPRESENCE_OK = False
 
 FRAMERATE        = 60
 ENEMY_SPAWN_RATE = 100 # In frames, 60fps
