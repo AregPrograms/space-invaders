@@ -66,7 +66,7 @@ def main():
         
         methods.change_volume(settings["volume"], False)
 
-    if (PYPRESENCE_OK):
+    if (config.PYPRESENCE_OK):
         config.RPC.update(state="Vibing in the Menu", large_image="logo", large_text="Space Invaders", start=config.START_UNIX_TIME)
     
     while running:
