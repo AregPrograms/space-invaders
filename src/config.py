@@ -7,7 +7,7 @@ try:
     client_id = "1033573115118235699"
     RPC = Presence(client_id)
     RPC.connect()
-except e:
+except (Exeception as e):
     PYPRESENCE_OK = False
 
 FRAMERATE        = 60
