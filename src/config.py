@@ -1,9 +1,14 @@
 from time import time
 from pypresence import Presence
 
-client_id = "1033573115118235699"
-RPC = Presence(client_id)
-RPC.connect()
+PYPRESENCE_OK = True
+
+try:
+    client_id = "1033573115118235699"
+    RPC = Presence(client_id)
+    RPC.connect()
+except e:
+    PYPRESCENCE_OK = False
 
 FRAMERATE        = 60
 ENEMY_SPAWN_RATE = 100 # In frames, 60fps

@@ -81,13 +81,16 @@ def main():
         if selection == "Play":
             assets.audio["main_menu"].stop()
             menu = GAME
-            config.RPC.update(state="Fighting Enemies", large_image="logo", large_text="Space Invaders", details="Level 1", start=config.START_UNIX_TIME, buttons=[{"label": "Join the fun", "url": "https://github.com/AregPrograms/space-invaders/releases/0.0.1"}])
+            if (PYPRESENCE_OK):
+                config.RPC.update(state="Fighting Enemies", large_image="logo", large_text="Space Invaders", details="Level 1", start=config.START_UNIX_TIME, buttons=[{"label": "Join the fun", "url": "https://github.com/AregPrograms/space-invaders/releases/0.0.1"}])
         elif selection == "Settings":
             menu = SETTINGS
-            config.RPC.update(state="Configuring Settings", large_image="logo", large_text="Space Invaders", start=config.START_UNIX_TIME)
+            if (PYPRESCENCE_OK):
+                config.RPC.update(state="Configuring Settings", large_image="logo", large_text="Space Invaders", start=config.START_UNIX_TIME)
         elif selection == "Back":
             menu = MAIN_MENU
-            config.RPC.update(state="Vibing in the Menu", large_image="logo", large_text="Space Invaders", start=config.START_UNIX_TIME)
+            if (PYPRESENCE_OK):
+                config.RPC.update(state="Vibing in the Menu", large_image="logo", large_text="Space Invaders", start=config.START_UNIX_TIME)
          
         menu.update()
         menu.draw()
